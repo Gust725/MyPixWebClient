@@ -21,12 +21,12 @@ remote.LoginIn = async (email, pass) => {
     },
   };
 
-  // const headers = {
-  //   headers: {
-  //     "Content-Type": "text/xml; charset=utf-8",
-  //     SOAPAction: "http://tempuri.org/LoginIn",
-  //   },
-  // };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/LoginIn",
+    },
+  };
 
   let args = Formatter.convertJsonToSoapRequest(payload);
   let remoteResponse = await ApiClient.post(url, args, headers);
