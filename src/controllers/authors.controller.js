@@ -1,15 +1,47 @@
-const Remote1 = require('../../remote2')
-const controller = {}
+const Remote1 = require("../../remote2");
+const controller = {};
 
 //Remote.LoginIn('selitzia@email.com','12345');
 // const data = Remote1.LoginIn('selitzia@email.com','12345');
 
 controller.getAllAuthors = (req, res) => {
-    const data = Remote1.ListAuthors();
-    data.then((value) => {
-        // res.json(value);
-        res.render('index', { value })
+  const data = Remote1.ListAuthors();
+  data.then((value) => {
+    // res.json(value);
+    res.render("index", { value });
+  });
+};
+
+controller.loginAuthor = (req, res) => {
+  const mail = req.body.login_mail;
+  const passw = req.body.login_pass;
+  console.log(mail, passw);
+  try {
+    const logData = Remote1.LoginIn(mail, passw);
+
+    logData.then((value) => {
+      console.log(value);
+      if (value) {
+        req.session.LoginSessionInfo = value;
+        res.redirect("/DashBoard/index");
+      } else {
+        res.render("login", { log: 2 });
+      }
     });
-}
+  } catch(err) {
+    console.log(err);
+  }
+};
+
+controller.registerAuthor = (req, res) => {
+  const regdata = {
+    username: req.body.register_nick,
+    mail: req.body.register_correo,
+    country: req.body.register_country,
+    birth: req.body.register_birth,
+    passw: req.body.register_pass,
+  };
+  console.log(regdata);
+};
 
 module.exports = controller;

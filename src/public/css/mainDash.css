@@ -1,0 +1,21 @@
+* {
+    background-color: rgb(31, 32, 39);
+    color: white;
+}
+.card {
+    position: relative;
+    text-align: center;
+    color: black;
+}
+
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+.bottom-left-id {
+    position: absolute;
+    bottom: 25px;
+    left: 16px;
+}
+

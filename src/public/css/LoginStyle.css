@@ -52,6 +52,14 @@ body.toggled>#tiles>.tile:hover {
   transform: translate(-50%, -50%);
 }
 
+.appear{
+  animation-name: slide-left;
+  animation-duration: .5s;
+  /* Preserve the effect of the animation at ending */
+  animation-fill-mode: forwards;
+  z-index: 2;
+}
+
 #tiles {
   height: calc(100vh - 1px);
   width: calc(100vw - 1px);
@@ -117,30 +125,70 @@ body.toggled>#tiles>.tile:hover {
 }
 
 /* -- Login elements -- */
-body.toggled>#logindiv {
+body.toggled>#maindiv {
   opacity: 1;
-}
-body.toggled>#form-id {
-  opacity: 1;
+  z-index: 3;
 }
 
+/* REGISTER DIV*/
+#maindiv{
+  opacity: 0;
+  transition: opacity 1200ms ease;
+  z-index: 0;
+
+}
+#registerdiv{
+  background-image: url('/images/image.jpg');
+  background-repeat: no-repeat;
+  background-size: 440px;
+  background-color: rgb(255, 255, 255);
+  font-family: "Rubik", sans-serif;
+  opacity: 0;
+  /* display: flex; */
+  padding-left: 480px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#registerdiv p button{
+  background: transparent;
+  border: none;
+  color: lightseagreen;
+  font-family: inherit;
+}
+#registerdiv p button:active{
+  background: gray;
+  border: none;
+  color: white;
+}
+#registerdiv h1 {
+  width: 100%;
+}
+/* login div*/
 #logindiv {
-  background-image: url('../images/image2.png');
+  background-image: url('/images/image2.png');
   background-repeat: no-repeat;
   background-size: 340px;
   background-color: rgb(255, 255, 255);
   font-family: "Rubik", sans-serif;
-  opacity: 0;
-  transition: opacity 1200ms ease;
-  z-index: 3;
   /* display: flex; */
   padding-left: 380px;
   padding-right: 40px;
   padding-top: 20px;
   padding-bottom: 20px;
-  
 }
 
+#logindiv p button{
+  background: transparent;
+  border: none;
+  color: lightseagreen;
+  font-family: inherit;
+}
+#logindiv p button:active{
+  background: gray;
+  border: none;
+  color: white;
+}
 .formdiv label{
   position: absolute;
   color: lightblue;
@@ -271,4 +319,46 @@ body.menu-toggled>.meta-link>span {
   color: white;
   font-family: "Rubik", sans-serif;
   transition: color 400ms;
+}
+
+/* ANIMATION */
+.dissapear {
+  animation-name: slide-right;
+  animation-duration: .5s;
+  /* Preserve the effect of the animation at ending */
+  animation-fill-mode: forwards;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes slide-right {
+
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    z-index: 0;
+  }
+}
+
+@keyframes slide-left {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hidden{
+  opacity: 1;
+  z-index: 2;
+  width: 0%;
+  height: 0%;
 }

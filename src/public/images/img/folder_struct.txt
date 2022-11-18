@@ -1,0 +1,71 @@
+el folder raiz es el año
+le siguen los meses
+y luego los dias
+
+cada dia tiene 3 folders
+large
+    contiene imagenes de presentacion, es la mas usada
+original
+    contiene las imagenes en alta resolucion, visualización de ventana completa
+square
+    contiene las thumbnails, previsualización de las imagenes en un tamaño pequeño
+
+los archivos con "p0, p1 ,pN" son las paginas de un mismo id
+    solo existen en large y original
+
+2022 AÑO
+|
+|___10 MES
+|   |
+|   |___09 DIA
+|   |   |
+|   |   |___large
+|   |   |   |
+|   |   |   |___101757749_p0_master1200.jpg
+|   |   |   |___101757749_p1_master1200.jpg
+|   |   |
+|   |   |___original
+|   |   |   |
+|   |   |   |___101757749_p0.jpg
+|   |   |   |___101757749_p1.jpg
+|   |   |
+|   |   |___square
+|   |       |
+|   |       |__101757749_p0_square1200.jpg
+|   |
+|   |___10 DIA
+|   |   |
+|   |   |___large
+|   |   |___original
+|   |   |___square
+|   |
+|   |___11
+|       |
+|       |___large
+|       |___original
+|       |___square
+|   
+|___11 MES
+|   |
+|   |___01 DIA
+|   |   |
+|   |   |___large
+|   |   |___original
+|   |   |___square
+|   |
+|   |___02 DIA
+|   |   |
+|   |   |___large
+|   |   |___original
+|   |   |___square
+|   |
+|   |___03 DIA
+|   |   |
+|   |   |___large
+|   |   |___original
+|   |   |___square
+|   |
+|   .
+|   .
+|   .
+

@@ -66,3 +66,35 @@ labels.forEach(label =>{
   .map((letter, index)=> `<span style="transition-delay:${index * 30}ms">${letter}</span>`)
   .join('')
 })
+
+
+function DoAnimation(){
+  var targetform = document.getElementById("logindiv");
+  targetform.className = "dissapear";
+  document.getElementById("logindiv").disabled = true;
+  document.getElementById('logindiv').readOnly = true;
+  var targetregister = document.getElementById("registerdiv");
+  document.getElementById("registerdiv").disabled = false;
+  document.getElementById('registerdiv').readOnly = false;
+  targetregister.className = "appear centered";
+}
+
+function DoAnimationOut(){
+  var targetregister = document.getElementById("registerdiv");
+  document.getElementById("registerdiv").disabled = true;
+  document.getElementById('registerdiv').readOnly = true;
+  targetregister.className = "dissapear";
+
+  var targetform = document.getElementById("logindiv");
+  targetform.className = "appear centered";
+  document.getElementById("logindiv").disabled = false;
+  document.getElementById('logindiv').readOnly = false;
+  
+}
+
+function OnLoadPage(){
+  var targetregister = document.getElementById("registerdiv");
+  targetregister.className = "hidden";
+  document.getElementById("registerdiv").disabled = true;
+  document.getElementById('registerdiv').readOnly = true;
+}

@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const author_controller = require('../controllers/authors.controller');
+const author_controller = require("../controllers/authors.controller");
 
-router.get('/', (req, res) => {
-    // data.then((value) => {
-    //     //res.json(value);
+router.get("/", (req, res) => {
+  res.render("login", { log: 1 });
+});
 
-    // });
-    res.render('login')
-})
+router.post("/login", author_controller.loginAuthor);
 
-router.get('/authors', author_controller.getAllAuthors);
+router.post("/register", author_controller.registerAuthor);
+
+router.get("/authors", author_controller.getAllAuthors);
 
 module.exports = router;
