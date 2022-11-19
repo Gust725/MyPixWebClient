@@ -159,3 +159,6 @@ data/enmap.sqlite
 .vs/VSWorkspaceState.json
 *.png
 test.py
+
+
+src/public/images/img/*

@@ -5,7 +5,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-
 app.use(express.static(path.join(__dirname, "./src/public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./src/views"));
@@ -20,7 +19,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 1000 * 60 * 5,
+      maxAge: 1000 * 60 * 15,
     },
   })
 );
