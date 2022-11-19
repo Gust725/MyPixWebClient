@@ -10,6 +10,4 @@ router.post("/login", author_controller.loginAuthor);
 
 router.post("/register", author_controller.registerAuthor);
 
-router.get("/authors", author_controller.getAllAuthors);
-
 module.exports = router;

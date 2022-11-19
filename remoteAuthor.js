@@ -2,7 +2,6 @@ const Formatter = require("./formatter");
 const axios = require("axios"); // Any API Client implementation. Can be axios
 const Parser = require("./parser");
 const https = require("https");
-// const { headers } = require("./headers");  //non-functional
 var format = require("xml-formatter");
 
 const ApiClient = axios.create({
@@ -11,18 +10,16 @@ const ApiClient = axios.create({
 });
 
 //const wsAuthor = `https://localhost:44325/wsAuthor.asmx?WSDL`;
-//const wsIllust = 'https://localhost:44325/wsIllust.asmx?WSDL';
 const wsAuthor = `http://www.dais-w-02.somee.com/wsAuthor.asmx?WSDL`;
-const wsIllust = "https://www.dais-w-02.somee.com/wsIllust.asmx?WSDL";
 //SSL sign certificated
 // comentar para some, sin comentar para local
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
-const remote = {};
+const remoteAuthor = {};
 
 //#region AUTHOR CALLS
 
-remote.LoginIn = async (email, pass) => {
+remoteAuthor.LoginIn = async (email, pass) => {
   let payload = {
     LoginIn: {
       mail: email,
@@ -39,10 +36,12 @@ remote.LoginIn = async (email, pass) => {
 
   try {
     let args = Formatter.convertJsonToSoapRequest(payload);
-    let remoteResponse = await ApiClient.post(wsAuthor, args, headers);
-    //console.log(format(remoteResponse.data))
+    let remoteAuthorResponse = await ApiClient.post(wsAuthor, args, headers);
+    //console.log(format(remoteAuthorResponse.data))
 
-    const parsedresponse = await Parser.convertXMLToJSON(remoteResponse.data);
+    const parsedresponse = await Parser.convertXMLToJSON(
+      remoteAuthorResponse.data
+    );
 
     const data =
       parsedresponse["soap:Body"].LoginInResponse.LoginInResult[
@@ -54,7 +53,7 @@ remote.LoginIn = async (email, pass) => {
   }
 };
 
-remote.ListAuthors = async () => {
+remoteAuthor.ListAuthors = async () => {
   // try {
   let payload = {
     ListAuthors: {},
@@ -68,29 +67,19 @@ remote.ListAuthors = async () => {
   };
 
   let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteResponse = await ApiClient.post(wsAuthor, args, headers);
+  let remoteAuthorResponse = await ApiClient.post(wsAuthor, args, headers);
 
-  // return remoteResponse
-
-  const remoteResponseParsed = await Parser.convertXMLToJSON(
-    remoteResponse.data
+  const remoteAuthorResponseParsed = await Parser.convertXMLToJSON(
+    remoteAuthorResponse.data
   );
-  // console.log(remoteResponseParsed["soap:Body"].ListAuthorsResponse.ListAuthorsResult["diffgr:diffgram"].DocumentElement.Table);
-  // const data = remoteResp  onseParsed["soap:Body"].ListAuthorsResponse.ListAuthorsResult["diffgr:diffgram"].DocumentElement.Table;
-  const data =
-    remoteResponseParsed["soap:Body"].ListAuthorsResponse.ListAuthorsResult[
-      "diffgr:diffgram"
-    ].DocumentElement.Table;
-  // console.log(typeof data)
-  // return remoteResponseParsed;
+  remoteAuthorResponseParsed["soap:Body"].ListAuthorsResponse.ListAuthorsResult[
+    "diffgr:diffgram"
+  ].DocumentElement.Table;
   return data;
-  // } catch (err) {
-  //   throw new Error(`Oops something went wrong. Please try again later ${err}`);
-  // }
 };
 //#endregion
-//#region ILLUST CALLS
-remote.DashboardFollowsIllust = async (author_id) => {
+
+remoteAuthor.DashboardFollowsIllust = async (author_id) => {
   let payload = {
     DashboardFollowsIllust: {
       codUser: author_id,
@@ -103,14 +92,14 @@ remote.DashboardFollowsIllust = async (author_id) => {
     },
   };
   let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteResponse = await ApiClient.post(wsIllust, args, headers);
-  const remoteResponseParsed = await Parser.convertXMLToJSON(
-    remoteResponse.data
+  let remoteIllustResponse = await ApiClient.post(wsAuthor, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
   );
   const data =
-    remoteResponseParsed["soap:Body"].DashboardFollowsIllustResponse
+    remoteIllustResponseParsed["soap:Body"].DashboardFollowsIllustResponse
       .DashboardFollowsIllustResult["diffgr:diffgram"].DocumentElement.Table;
   return data;
 };
-//#endregion
-module.exports = remote;
+
+module.exports = remoteAuthor;

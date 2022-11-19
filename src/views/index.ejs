@@ -11,14 +11,11 @@
 
 <body>
     <%- include('navbar', LoginData) %>
-        <!-- <h1>INFO AUTOR</h1> <%= LoginData %> -->
-
         <h1>ULTIMOS ARTWORKS</h1>
-
         <div class="container">
             <% for( let index = 0; index < illusts.length; index++ ) { %>
                 <div class="image">
-                    <a class="card__a"href="/illusts/<%= illusts[index].id %> ">
+                    <a class="card__a"href="/illusts/<%= illusts[index].id %>" style="width: 200px; height: 200px;">
                         <img class="image__img" src="/images<%= illusts[index].thumb_dir.split(".")[1] %>.jpg">
                         <div class="image__overlay">
                             <div class="image__title">
@@ -31,12 +28,12 @@
                             <div class="author__line">
                                 <a class="author__button" href="/users/id">
                                     <img class="author__img" src="/images/img/users/profile/4211525_f2e8643ce2e0f946e46dd93e1f940b9d_170.jpg" alt="">
+                                    <p class="author__name">Miraiur</p>
                                 </a>
-                                <p class="author__name">Miraiur</p>
+                                
                             </div>
                         </div>
-                    </a>
-                    
+                    </a>  
                 </div>
             <% } %>
         </div>

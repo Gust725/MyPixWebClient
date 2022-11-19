@@ -1,16 +1,8 @@
-const Remote1 = require("../../remote2");
+const Remote1 = require("../../remoteAuthor");
 const controller = {};
 
 //Remote.LoginIn('selitzia@email.com','12345');
 // const data = Remote1.LoginIn('selitzia@email.com','12345');
-
-controller.getAllAuthors = (req, res) => {
-  const data = Remote1.ListAuthors();
-  data.then((value) => {
-    // res.json(value);
-    res.render("index", { value });
-  });
-};
 
 controller.loginAuthor = (req, res) => {
   const mail = req.body.login_mail;

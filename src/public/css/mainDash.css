@@ -42,18 +42,21 @@
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 5px;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
 }
 .author__line{
     background: transparent;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
     margin: 5px;
     position: relative;
 }
 .author__button{
     background: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     z-index: 0;
 }
 .author__button:hover{
