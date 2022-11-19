@@ -15,7 +15,7 @@
         <div class="container">
             <% for( let index = 0; index < illusts.length; index++ ) { %>
                 <div class="image">
-                    <a class="card__a"href="/illusts/<%= illusts[index].id %>" style="width: 200px; height: 200px;">
+                    <a class="card__a" href="/illusts/<%= illusts[index].id %>" style="width: 200px; height: 200px;">
                         <img class="image__img" src="/images<%= illusts[index].thumb_dir.split(".")[1] %>.jpg">
                         <div class="image__overlay">
                             <div class="image__title">

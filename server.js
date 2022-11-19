@@ -9,9 +9,6 @@ app.use(express.static(path.join(__dirname, "./src/public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./src/views"));
 
-const login_route = require("./src/routes/login.routes");
-const illust_route = require("./src/routes/illust.routes");
-
 app.use(cookieParser());
 app.use(
   session({
@@ -19,7 +16,8 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 1000 * 60 * 15,
+      // maxAge: 1000 * 60 * 15
+      maxAge: 30000000,
     },
   })
 );
@@ -30,8 +28,14 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Routes Confi
+
+const login_route = require("./src/routes/login.routes");
+const dashboard_route = require("./src/routes/dashboard.routes");
+const illust_route = require("./src/routes/illust.routes");
 app.use("/", login_route);
-app.use("/DashBoard", illust_route);
+app.use("/DashBoard", dashboard_route);
+app.use("/illusts", illust_route);
 
 const PORT = 1234;
 

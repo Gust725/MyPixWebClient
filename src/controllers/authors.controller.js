@@ -1,4 +1,4 @@
-const Remote1 = require("../../remoteAuthor");
+const Remote1 = require("../../remoteWS");
 const controller = {};
 
 //Remote.LoginIn('selitzia@email.com','12345');
