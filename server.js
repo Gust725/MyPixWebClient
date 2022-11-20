@@ -39,7 +39,7 @@ app.use("/DashBoard", dashboard_route);
 app.use("/illusts", illust_route);
 app.use("/user", user_route);
 
-const PORT = process.env.PORT;
+const PORT = process.env.$PORT;
 
 
 app.listen(PORT, (req, res) => {
