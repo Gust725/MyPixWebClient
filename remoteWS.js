@@ -9,11 +9,11 @@ const ApiClient = axios.create({
   httpsAgent: new https.Agent({ keepAlive: true }),
 });
 
-const someeWS = `https://localhost:44325/wsAuthor.asmx?WSDL`;
-//const someeWS = `http://www.dais-w-02.somee.com/wsAuthor.asmx?WSDL`;
+//const someeWS = `https://localhost:44325/wsAuthor.asmx?WSDL`;
+const someeWS = `http://www.dais-w-02.somee.com/wsAuthor.asmx?WSDL`;
 //SSL sign certificated
 // comentar para some, sin comentar para local
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 const remoteWS = {};
 
@@ -100,7 +100,93 @@ remoteWS.DashboardFollowsIllust = async (author_id) => {
       .DashboardFollowsIllustResult["diffgr:diffgram"].DocumentElement.Table;
   return data;
 };
+remoteWS.CommissionDashboardArtistsList = async () => {
+  let payload = {
+    CommissionDashboardArtistsList: {
+    },
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/CommissionDashboardArtistsList",
+    },
+  };
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+  const data =
+    remoteIllustResponseParsed["soap:Body"].CommissionDashboardArtistsListResponse
+      .CommissionDashboardArtistsListResult["diffgr:diffgram"].DocumentElement.Table;
+  return data;
+}
+remoteWS.CommissionDashboardFollowingList = async (codUser) => {
+  let payload = {
+    CommissionDashboardFollowingList: {
+      codUser: codUser
+    },
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/CommissionDashboardFollowingList",
+    },
+  };
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+  const data =
+    remoteIllustResponseParsed["soap:Body"].CommissionDashboardFollowingListResponse
+      .CommissionDashboardFollowingListResult["diffgr:diffgram"].DocumentElement.Table;
+  return data;
+}
+remoteWS.CommissionDashboardFollowingRecents = async (codUser) =>{
+  let payload = {
+    CommissionDashboardFollowingRecents: {
+      codUser: codUser
+    },
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/CommissionDashboardFollowingRecents",
+    },
+  };
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+  const data =
+    remoteIllustResponseParsed["soap:Body"].CommissionDashboardFollowingRecentsResponse
+      .CommissionDashboardFollowingRecentsResult["diffgr:diffgram"].DocumentElement.Table;
+  return data;
+}
 
+remoteWS.CommissionDashboardIllustsList = async () => {
+  let payload = {
+    CommissionDashboardIllustsList: {
+    },
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/CommissionDashboardIllustsList",
+    },
+  };
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+  const data =
+    remoteIllustResponseParsed["soap:Body"].CommissionDashboardIllustsListResponse
+      .CommissionDashboardIllustsListResult["diffgr:diffgram"].DocumentElement.Table;
+  return data;
+}
 //#endregion
 
 //#region ILLUSTPAGE CALLS

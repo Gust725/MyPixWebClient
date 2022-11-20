@@ -8,11 +8,13 @@ controller.listFollowingIllust = async (req, res) => {
 };
 
 controller.commission = async(req,res)=>{
-  res.render("commission");
+  const LoginData = req.session.LoginSessionInfo;
+  res.render("commission", {LoginData});
 }
 
 controller.request = async(req,res)=>{
-  res.render("request");
+  const LoginData = req.session.LoginSessionInfo;
+  res.render("request", {LoginData});
 }
 
 module.exports = controller;
