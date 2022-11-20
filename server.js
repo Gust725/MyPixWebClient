@@ -39,7 +39,8 @@ app.use("/DashBoard", dashboard_route);
 app.use("/illusts", illust_route);
 app.use("/user", user_route);
 
-const PORT = 1234;
+const PORT = process.env.PORT;
+
 
 app.listen(PORT, (req, res) => {
   console.log("App listening on port: ", PORT);
