@@ -15,7 +15,7 @@ controller.loginAuthor = (req, res) => {
       console.log(value);
       if (value) {
         req.session.LoginSessionInfo = value;
-        res.redirect("/DashBoard/index");
+        res.redirect("/DashBoard");
       } else {
         res.render("login", { log: 2 });
       }

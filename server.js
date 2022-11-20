@@ -33,9 +33,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const login_route = require("./src/routes/login.routes");
 const dashboard_route = require("./src/routes/dashboard.routes");
 const illust_route = require("./src/routes/illust.routes");
+const user_route = require("./src/routes/user.routes");
 app.use("/", login_route);
 app.use("/DashBoard", dashboard_route);
 app.use("/illusts", illust_route);
+app.use("/user", user_route);
 
 const PORT = 1234;
 

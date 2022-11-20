@@ -9,15 +9,15 @@ const ApiClient = axios.create({
   httpsAgent: new https.Agent({ keepAlive: true }),
 });
 
-//const someeWS = `https://localhost:44325/someeWS.asmx?WSDL`;
-const someeWS = `http://www.dais-w-02.somee.com/wsAuthor.asmx?WSDL`;
+const someeWS = `https://localhost:44325/wsAuthor.asmx?WSDL`;
+//const someeWS = `http://www.dais-w-02.somee.com/wsAuthor.asmx?WSDL`;
 //SSL sign certificated
 // comentar para some, sin comentar para local
-//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 const remoteWS = {};
 
-//#region AUTHOR CALLS
+//#region AUTH CALLS
 
 remoteWS.LoginIn = async (email, pass) => {
   let payload = {
@@ -124,8 +124,9 @@ remoteWS.GetIllust = async (illust_id) => {
     remoteIllustResponse.data
   );
   const data =
-    remoteIllustResponseParsed["soap:Body"].GetIllustResponse
-      .GetIllustResult["diffgr:diffgram"].DocumentElement.Table;
+    remoteIllustResponseParsed["soap:Body"].GetIllustResponse.GetIllustResult[
+      "diffgr:diffgram"
+    ].DocumentElement.Table;
   return data;
 };
 remoteWS.GetIllustPages = async (illust_id) => {
@@ -175,4 +176,31 @@ remoteWS.GetIllustsTags = async (illust_id) => {
   return data;
 };
 //#endregion
+
+//#region USERPROFILE CALLS
+remoteWS.SingleAuthor = async (codAuthor) => {
+  let payload = {
+    SingleAuthor: {
+      codAuthor: codAuthor,
+    },
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/SingleAuthor",
+    },
+  };
+
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+  const data =
+    remoteIllustResponseParsed["soap:Body"].SingleAuthorResponse
+      .SingleAuthorResult["diffgr:diffgram"].DocumentElement.Table;
+  return data;
+};
+//#endregion
+
 module.exports = remoteWS;
