@@ -2,6 +2,7 @@ const Formatter = require("./formatter");
 const axios = require("axios"); // Any API Client implementation. Can be axios
 const Parser = require("./parser");
 const https = require("https");
+const foo = require("./src/middlewares/functions")
 var format = require("xml-formatter");
 
 const ApiClient = axios.create({
@@ -9,6 +10,9 @@ const ApiClient = axios.create({
   httpsAgent: new https.Agent({ keepAlive: true }),
 });
 //testing
+
+
+
 
 const someeWS = `https://localhost:44325/wsAuthor.asmx?WSDL`;
 // const someeWS = `http://www.dais-w-02.somee.com/wsAuthor.asmx?WSDL`;
@@ -29,16 +33,11 @@ remoteWS.LoginIn = async (email, pass) => {
     },
   };
 
-  const headers = {
-    headers: {
-      "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://tempuri.org/LoginIn",
-    },
-  };
+  const passHeader = foo.header("LoginIn");
 
   try {
     let args = Formatter.convertJsonToSoapRequest(payload);
-    let remoteWSResponse = await ApiClient.post(someeWS, args, headers);
+    let remoteWSResponse = await ApiClient.post(someeWS, args, passHeader);
     //console.log(format(remoteWSResponse.data))
 
     const parsedresponse = await Parser.convertXMLToJSON(remoteWSResponse.data);
@@ -65,6 +64,7 @@ remoteWS.ListAuthors = async () => {
       SOAPAction: "http://tempuri.org/ListAuthors",
     },
   };
+  const passHeader = foo.header("DashboardFollowsIllust");
 
   let args = Formatter.convertJsonToSoapRequest(payload);
   let remoteWSResponse = await ApiClient.post(someeWS, args, headers);
@@ -80,36 +80,24 @@ remoteWS.ListAuthors = async () => {
 //#endregion
 
 //#region DASHBOARD CALLS
-
-function methodParser(method, remoteIllustResponseParsed) {
-  const data =
-    remoteIllustResponseParsed["soap:Body"][`${method}Response`][`${method}Result`]["diffgr:diffgram"].DocumentElement.Table;
-  return data;
-}
-
 remoteWS.DashboardFollowsIllust = async (author_id) => {
   let payload = {
     DashboardFollowsIllust: {
       codUser: author_id,
     },
   };
-  const headers = {
-    headers: {
-      "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://tempuri.org/DashboardFollowsIllust",
-    },
-  };
+
+  const passHeader = foo.header("DashboardFollowsIllust");
+
   let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, passHeader);
   const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
     remoteIllustResponse.data
   );
-  // const data =
-  //   remoteIllustResponseParsed["soap:Body"].DashboardFollowsIllustResponse
-  //     .DashboardFollowsIllustResult["diffgr:diffgram"].DocumentElement.Table;
-  const data2 = methodParser("DashboardFollowsIllust", remoteIllustResponseParsed);
-
-  return data2;
+  const data =
+    remoteIllustResponseParsed["soap:Body"].DashboardFollowsIllustResponse
+      .DashboardFollowsIllustResult["diffgr:diffgram"].DocumentElement.Table;
+  return data;
 };
 remoteWS.CommissionDashboardArtistsList = async () => {
   let payload = {
@@ -299,117 +287,6 @@ remoteWS.SingleAuthor = async (codAuthor) => {
       .SingleAuthorResult["diffgr:diffgram"].DocumentElement.Table;
   return data;
 };
-
-remoteWS.NewIllustPublish = async (id, title, sanity, author, il_type, is_nsfw, thumb_dir, ugoira_dir) => {
-  let payload = {
-    NewIllustPublish: {
-      id: id,
-      title: title,
-      sanity: sanity,
-      author: author,
-      il_type: il_type,
-      is_nsfw: is_nsfw,
-      thumb_dir: thumb_dir,
-      ugoira_dir: ugoira_dir
-    },
-  };
-  const headers = {
-    headers: {
-      "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://tempuri.org/NewIllustPublish",
-    },
-  };
-
-  let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
-  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
-    remoteIllustResponse.data
-  );
-  const data = remoteIllustResponseParsed["soap:Body"].NewIllustPublishResponse.NewIllustPublishResult["diffgr:diffgram"].DocumentElement.Table;
-  return data;
-}
-
-remoteWS.AttachPageNewIllust = async (parent, page_num, large_dir) => {
-  let payload = {
-    AttachPageNewIllust: {
-      parent: parent,
-      page_num: page_num,
-      large_dir: large_dir
-    },
-  };
-  const headers = {
-    headers: {
-      "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://tempuri.org/AttachPageNewIllust",
-    },
-  };
-
-  let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
-  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
-    remoteIllustResponse.data
-  );
-  const data = remoteIllustResponseParsed["soap:Body"].AttachPageNewIllustResponse.AttachPageNewIllustResult["diffgr:diffgram"].DocumentElement.Table;
-  return data;
-}
-
-remoteWS.AttachTagNewIllust = async (tag_name, illust_id) => {
-  let payload = {
-    AttachTagNewIllust: {
-      parent: parent,
-      page_num: page_num,
-      large_dir: large_dir
-    },
-  };
-  const headers = {
-    headers: {
-      "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://tempuri.org/AttachTagNewIllust",
-    },
-  };
-
-  let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
-  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
-    remoteIllustResponse.data
-  );
-
-  const data2 = methodParser("AttachTagNewIllust", remoteIllustResponseParsed);
-  // const data = remoteIllustResponseParsed["soap:Body"].AttachTagNewIllustResponse.AttachTagNewIllustResult["diffgr:diffgram"].DocumentElement.Table;
-  return data2;
-}
-
 //#endregion
-
-//#region Author Posts
-remoteWS.AddNewPost = async (author_id, post_content) => {
-  let payload = {
-    AddNewPost: {
-      parent: parent,
-      page_num: page_num,
-      large_dir: large_dir
-    },
-  };
-  const headers = {
-    headers: {
-      "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://tempuri.org/AddNewPost",
-    },
-  };
-
-  let args = Formatter.convertJsonToSoapRequest(payload);
-  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
-  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
-    remoteIllustResponse.data
-  );
-
-  const data2 = methodParser("AddNewPost", remoteIllustResponseParsed);
-  // const data = remoteIllustResponseParsed["soap:Body"].AddNewPostResponse.AddNewPostResult["diffgr:diffgram"].DocumentElement.Table;
-  return data2;
-}
-
-
-
-//#endregion 
 
 module.exports = remoteWS;
