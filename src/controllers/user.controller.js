@@ -1,4 +1,4 @@
-const Remote1 = require("../../remoteWS");
+const Remote1 = require("../../helpers/soapConsumer/remoteWS");
 const controller = {};
 
 controller.User = async (req, res) => {

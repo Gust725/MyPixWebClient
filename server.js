@@ -13,12 +13,10 @@ app.set("views", path.join(__dirname, "./src/views"));
 
 const date = new Date()
 
-
 // ✅ Get a string according to a provided Time zone
 // const hora = date.toLocaleString('en-US', {
 //   timeZone: 'America/Lima',
 // })
-
 
 const expiresAt = new Date(+date + 12000 * 10000)
 console.log(expiresAt);
