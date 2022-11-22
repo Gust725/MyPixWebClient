@@ -381,7 +381,7 @@ remoteWS.AttachTagNewIllust = async (tag_name, illust_id) => {
 
 //#endregion
 
-//#region Author Posts
+//#region AUTHOR POSTS
 remoteWS.AddNewPost = async (author_id, post_content) => {
   let payload = {
     AddNewPost: {
