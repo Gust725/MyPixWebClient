@@ -460,9 +460,8 @@ remoteWS.AttachTagNewIllust = async (tag_name, illust_id) => {
 remoteWS.AddNewPost = async (author_id, post_content) => {
   let payload = {
     AddNewPost: {
-      parent: parent,
-      page_num: page_num,
-      large_dir: large_dir,
+      author_id: author_id,
+      post_content: post_content,
     },
   };
   const headers = {
@@ -484,5 +483,29 @@ remoteWS.AddNewPost = async (author_id, post_content) => {
 };
 
 //#endregion
+
+remoteWS.AbrirRequests = async (codUser) => {
+  let payload = {
+    AbrirRequests: {
+      codUser: codUser,
+    },
+  };
+
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/AbrirRequests",
+    },
+  };
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+
+  const data2 = methodParser("AbrirRequests", remoteIllustResponseParsed);
+  // const data = remoteIllustResponseParsed["soap:Body"].AddNewPostResponse.AddNewPostResult["diffgr:diffgram"].DocumentElement.Table;
+  return data2;
+}
 
 module.exports = remoteWS;

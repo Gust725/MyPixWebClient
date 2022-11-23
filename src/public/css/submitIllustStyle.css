@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500');
+
+html * {
+    font-family: "Comfortaa", sans-serif !important;
+}
+
+body {
+    min-width: 1300px;
+    background: rgb(31, 32, 39);
+    color: white;
+}
+
+i {
+   
+}
+
+.head__submit {
+    display: flex;
+}

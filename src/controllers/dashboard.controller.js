@@ -29,6 +29,7 @@ controller.listFollowingIllust = async (req, res) => {
 
 controller.commission = async (req, res) => {
   const LoginData = req.session.LoginSessionInfo;
+  
   res.render("commission", { LoginData });
 };
 
