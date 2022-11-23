@@ -9,7 +9,7 @@ body{
     min-width: 1300px;
 }
 
-/* IMAGE FOLLOW CARDS */
+/* IMAGE FOLLOW & RANKING CARDS */
 .image__card{
     background: transparent;
 }
@@ -88,4 +88,16 @@ body{
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
+}
+
+/* AUTHOR RECOMMENDED CARDS */
+.author__card{
+    background: transparent;
+    margin: 3px;
+    position: relative;
+}
+.author__header{
+    background: transparent;
+    display: flex;
+    align-items: flex-end;
 }

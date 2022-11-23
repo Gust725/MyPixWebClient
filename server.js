@@ -27,7 +27,7 @@ app.use(
     secret: "keyboard neko",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 60000000 },
+    cookie: { maxAge: 1000 * 60 * 15 * 5 },
   })
 );
 app.use((req, res, next) => {
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Routes Confi
+// Routes Config
 
 const login_route = require("./src/routes/login.routes");
 const dashboard_route = require("./src/routes/dashboard.routes");

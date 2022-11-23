@@ -8,9 +8,10 @@
   </head>
 
   <body>
-    <%- include('navbar', LoginData) %> <%= data.illust_data %> <%=
-    data.illust_pages %> <%= data.illust_tags %>
-
+    <%- include('navbar', LoginData) %> 
+    <%= data.illust_data %> 
+    <%= data.illust_pages %> 
+    <%= data.illust_tags %>
     <div class="carousel">
 
       <main>
@@ -19,7 +20,23 @@
           <div class="lx-container-80" style="border:2px solid blue;">
             <div class="lx-row" style="border:2px solid green;">
               <div class="lx-card carousel-container" style="border:2px solid red;">
-                <div class="item fade" style="border:2px solid purple;">
+                <% if (data.illust_pages.large_dir) { %>
+                  <div class="item fade">
+                    <div class="image" style="border:2px solid purple;">
+                      <img src="/images<%= data.illust_pages.large_dir.slice(1, data.illust_pages.large_dir.length) %>" alt="">
+                    </div>
+                  </div>
+                <% } else { %>
+                  <% for( let index = 0; index < data.illust_pages.length; index++ ) { %>
+                    <div class="item fade">
+                      <div class="image" style="border:2px solid purple;">
+                        <img src="/images<%= data.illust_pages[index].large_dir.slice(1, data.illust_pages[index].large_dir.length) %>" alt="">
+                      </div>
+                    </div>
+                  <% } %>
+                <% } %>
+                 
+                <!-- <div class="item fade" style="border:2px solid purple;">
                   <div class="image"><img src="https://bit.ly/34xczKy" /></div>
                 </div>
                 <div class="item fade">
@@ -27,7 +44,7 @@
                 </div>
                 <div class="item fade">
                   <div class="image"><img src="https://bit.ly/3iMHuI1" /></div>
-                </div>
+                </div> -->
                 <a class="prev has-dflex-center"
                   ><i class="fas fa-angle-left"></i></a
                 ><a class="next has-dflex-center"

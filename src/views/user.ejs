@@ -1,26 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= AuthorData.nickname %> - MyPix</title>
+    <link rel="stylesheet" href="/css/userStyle.css">
+    
+    <!-- dios mio lo que tuve que pasar para que esto sirva -->
+    <style>
+    :root{
+        --background-image: url(<%='/images/'+AuthorData.profile_portrait_dir.slice(1,AuthorData.profile_portrait_dir.length)%>);
+    }
+    </style>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= AuthorData.nickname %> - MyPix
-    </title>
-</head>
-
-<body>
+  <body>
     <%- include('navbar', LoginData) %> 
+    <div class="author__header">
+      <div class="header__fill" style="background-image: var(--background-image);">
+        <div class="author__line">
+          <div class="author__picname">
+            <img src="<%='/images/'+AuthorData.profile_pic_dir.slice(1,AuthorData.profile_pic_dir.length)%>" alt="" style="width: 90px;">
+            <h3><%= AuthorData.nickname %> </h3>
+          </div>
+          <div class="author__inline">
+            <div class="author__stats">
+              <h4>Views</h4>
+              <h4>Ilustraciones</h4>
+              <h4>Page views</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      
+    </div>
+    <div class="author__nav">
+      <nav>
+        <ul class="nav__links__auth"">
+            <li><a href="/Dashboard/">Ilustraciones</a></li>
+            <li><a href="/DashBoard/commission">Albumes</a></li>
+            <li><a href="/DashBoard/request">Publicaciónes</a></li>
+            <li><a href="/DashBoard/request">Comisiones</a></li>
+            <li><a href="/DashBoard/request">Requests</a></li>
 
-    <% if (!match) { %>
-        <input type="button" value="editar" class="btn-boton">
-        <% }else{ %>
-            <input type="button" value="editar" class="btn-boton" hidden>
-        <h1> No es el mismo en sesion </h1>
-        <% } %>
-
-        <textarea name="" id="" cols="30" rows="10" autofocus></textarea>
-</body>
-
+        </ul>
+      </nav>
+    </div>
+    <!-- <% if (!match) { %>
+        <input type="button" value="editar" class="btn-boton" />
+    <% }else{ %>
+        <input type="button" value="editar" class="btn-boton" hidden />
+        <h1>No es el mismo en sesion</h1>
+    <% } %> -->
+  </body>
 </html>

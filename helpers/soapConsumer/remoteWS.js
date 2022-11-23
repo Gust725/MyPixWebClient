@@ -19,6 +19,14 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 const remoteWS = {};
 
+function methodParser(method, remoteIllustResponseParsed) {
+  const data =
+    remoteIllustResponseParsed["soap:Body"][`${method}Response`][
+      `${method}Result`
+    ]["diffgr:diffgram"].DocumentElement.Table;
+  return data;
+}
+
 //#region AUTH CALLS
 
 remoteWS.LoginIn = async (email, pass) => {
@@ -80,13 +88,6 @@ remoteWS.ListAuthors = async () => {
 //#endregion
 
 //#region DASHBOARD CALLS
-
-function methodParser(method, remoteIllustResponseParsed) {
-  const data =
-    remoteIllustResponseParsed["soap:Body"][`${method}Response`][`${method}Result`]["diffgr:diffgram"].DocumentElement.Table;
-  return data;
-}
-
 remoteWS.DashboardFollowsIllust = async (author_id) => {
   let payload = {
     DashboardFollowsIllust: {
@@ -107,14 +108,69 @@ remoteWS.DashboardFollowsIllust = async (author_id) => {
   // const data =
   //   remoteIllustResponseParsed["soap:Body"].DashboardFollowsIllustResponse
   //     .DashboardFollowsIllustResult["diffgr:diffgram"].DocumentElement.Table;
-  const data2 = methodParser("DashboardFollowsIllust", remoteIllustResponseParsed);
+  const data2 = methodParser(
+    "DashboardFollowsIllust",
+    remoteIllustResponseParsed
+  );
+
+  return data2;
+};
+remoteWS.DashboardRankings = async () => {
+  let payload = {
+    DashboardRankings: {},
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/DashboardRankings",
+    },
+  };
+  try {
+    let args = Formatter.convertJsonToSoapRequest(payload);
+    let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+    const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+      remoteIllustResponse.data
+    );
+    // const data =
+    //   remoteIllustResponseParsed["soap:Body"].DashboardRankingsResponse
+    //     .DashboardRankingsResult["diffgr:diffgram"].DocumentElement.Table;
+    const data2 = methodParser("DashboardRankings", remoteIllustResponseParsed);
+    return data2;
+  } catch (error) {
+    console.log("Error en RemoteWS: DashboardRankings ::",error.message);
+    return null;
+  }
+};
+remoteWS.DashboardRecommendedArtists = async (codUser) => {
+  let payload = {
+    DashboardRecommendedArtists: {
+      codUser: codUser,
+    },
+  };
+  const headers = {
+    headers: {
+      "Content-Type": "text/xml; charset=utf-8",
+      SOAPAction: "http://tempuri.org/DashboardRecommendedArtists",
+    },
+  };
+  let args = Formatter.convertJsonToSoapRequest(payload);
+  let remoteIllustResponse = await ApiClient.post(someeWS, args, headers);
+  const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
+    remoteIllustResponse.data
+  );
+  // const data =
+  //   remoteIllustResponseParsed["soap:Body"].DashboardRecommendedArtistsResponse
+  //     .DashboardRecommendedArtistsResult["diffgr:diffgram"].DocumentElement.Table;
+  const data2 = methodParser(
+    "DashboardRecommendedArtists",
+    remoteIllustResponseParsed
+  );
 
   return data2;
 };
 remoteWS.CommissionDashboardArtistsList = async () => {
   let payload = {
-    CommissionDashboardArtistsList: {
-    },
+    CommissionDashboardArtistsList: {},
   };
   const headers = {
     headers: {
@@ -128,14 +184,16 @@ remoteWS.CommissionDashboardArtistsList = async () => {
     remoteIllustResponse.data
   );
   const data =
-    remoteIllustResponseParsed["soap:Body"].CommissionDashboardArtistsListResponse
-      .CommissionDashboardArtistsListResult["diffgr:diffgram"].DocumentElement.Table;
+    remoteIllustResponseParsed["soap:Body"]
+      .CommissionDashboardArtistsListResponse
+      .CommissionDashboardArtistsListResult["diffgr:diffgram"].DocumentElement
+      .Table;
   return data;
-}
+};
 remoteWS.CommissionDashboardFollowingList = async (codUser) => {
   let payload = {
     CommissionDashboardFollowingList: {
-      codUser: codUser
+      codUser: codUser,
     },
   };
   const headers = {
@@ -150,14 +208,16 @@ remoteWS.CommissionDashboardFollowingList = async (codUser) => {
     remoteIllustResponse.data
   );
   const data =
-    remoteIllustResponseParsed["soap:Body"].CommissionDashboardFollowingListResponse
-      .CommissionDashboardFollowingListResult["diffgr:diffgram"].DocumentElement.Table;
+    remoteIllustResponseParsed["soap:Body"]
+      .CommissionDashboardFollowingListResponse
+      .CommissionDashboardFollowingListResult["diffgr:diffgram"].DocumentElement
+      .Table;
   return data;
-}
+};
 remoteWS.CommissionDashboardFollowingRecents = async (codUser) => {
   let payload = {
     CommissionDashboardFollowingRecents: {
-      codUser: codUser
+      codUser: codUser,
     },
   };
   const headers = {
@@ -172,15 +232,15 @@ remoteWS.CommissionDashboardFollowingRecents = async (codUser) => {
     remoteIllustResponse.data
   );
   const data =
-    remoteIllustResponseParsed["soap:Body"].CommissionDashboardFollowingRecentsResponse
-      .CommissionDashboardFollowingRecentsResult["diffgr:diffgram"].DocumentElement.Table;
+    remoteIllustResponseParsed["soap:Body"]
+      .CommissionDashboardFollowingRecentsResponse
+      .CommissionDashboardFollowingRecentsResult["diffgr:diffgram"]
+      .DocumentElement.Table;
   return data;
-}
-
+};
 remoteWS.CommissionDashboardIllustsList = async () => {
   let payload = {
-    CommissionDashboardIllustsList: {
-    },
+    CommissionDashboardIllustsList: {},
   };
   const headers = {
     headers: {
@@ -194,10 +254,12 @@ remoteWS.CommissionDashboardIllustsList = async () => {
     remoteIllustResponse.data
   );
   const data =
-    remoteIllustResponseParsed["soap:Body"].CommissionDashboardIllustsListResponse
-      .CommissionDashboardIllustsListResult["diffgr:diffgram"].DocumentElement.Table;
+    remoteIllustResponseParsed["soap:Body"]
+      .CommissionDashboardIllustsListResponse
+      .CommissionDashboardIllustsListResult["diffgr:diffgram"].DocumentElement
+      .Table;
   return data;
-}
+};
 //#endregion
 
 //#region ILLUSTPAGE CALLS
@@ -300,7 +362,16 @@ remoteWS.SingleAuthor = async (codAuthor) => {
   return data;
 };
 
-remoteWS.NewIllustPublish = async (id, title, sanity, author, il_type, is_nsfw, thumb_dir, ugoira_dir) => {
+remoteWS.NewIllustPublish = async (
+  id,
+  title,
+  sanity,
+  author,
+  il_type,
+  is_nsfw,
+  thumb_dir,
+  ugoira_dir
+) => {
   let payload = {
     NewIllustPublish: {
       id: id,
@@ -310,7 +381,7 @@ remoteWS.NewIllustPublish = async (id, title, sanity, author, il_type, is_nsfw, 
       il_type: il_type,
       is_nsfw: is_nsfw,
       thumb_dir: thumb_dir,
-      ugoira_dir: ugoira_dir
+      ugoira_dir: ugoira_dir,
     },
   };
   const headers = {
@@ -325,16 +396,18 @@ remoteWS.NewIllustPublish = async (id, title, sanity, author, il_type, is_nsfw, 
   const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
     remoteIllustResponse.data
   );
-  const data = remoteIllustResponseParsed["soap:Body"].NewIllustPublishResponse.NewIllustPublishResult["diffgr:diffgram"].DocumentElement.Table;
+  const data =
+    remoteIllustResponseParsed["soap:Body"].NewIllustPublishResponse
+      .NewIllustPublishResult["diffgr:diffgram"].DocumentElement.Table;
   return data;
-}
+};
 
 remoteWS.AttachPageNewIllust = async (parent, page_num, large_dir) => {
   let payload = {
     AttachPageNewIllust: {
       parent: parent,
       page_num: page_num,
-      large_dir: large_dir
+      large_dir: large_dir,
     },
   };
   const headers = {
@@ -349,16 +422,18 @@ remoteWS.AttachPageNewIllust = async (parent, page_num, large_dir) => {
   const remoteIllustResponseParsed = await Parser.convertXMLToJSON(
     remoteIllustResponse.data
   );
-  const data = remoteIllustResponseParsed["soap:Body"].AttachPageNewIllustResponse.AttachPageNewIllustResult["diffgr:diffgram"].DocumentElement.Table;
+  const data =
+    remoteIllustResponseParsed["soap:Body"].AttachPageNewIllustResponse
+      .AttachPageNewIllustResult["diffgr:diffgram"].DocumentElement.Table;
   return data;
-}
+};
 
 remoteWS.AttachTagNewIllust = async (tag_name, illust_id) => {
   let payload = {
     AttachTagNewIllust: {
       parent: parent,
       page_num: page_num,
-      large_dir: large_dir
+      large_dir: large_dir,
     },
   };
   const headers = {
@@ -377,7 +452,7 @@ remoteWS.AttachTagNewIllust = async (tag_name, illust_id) => {
   const data2 = methodParser("AttachTagNewIllust", remoteIllustResponseParsed);
   // const data = remoteIllustResponseParsed["soap:Body"].AttachTagNewIllustResponse.AttachTagNewIllustResult["diffgr:diffgram"].DocumentElement.Table;
   return data2;
-}
+};
 
 //#endregion
 
@@ -387,7 +462,7 @@ remoteWS.AddNewPost = async (author_id, post_content) => {
     AddNewPost: {
       parent: parent,
       page_num: page_num,
-      large_dir: large_dir
+      large_dir: large_dir,
     },
   };
   const headers = {
@@ -406,10 +481,8 @@ remoteWS.AddNewPost = async (author_id, post_content) => {
   const data2 = methodParser("AddNewPost", remoteIllustResponseParsed);
   // const data = remoteIllustResponseParsed["soap:Body"].AddNewPostResponse.AddNewPostResult["diffgr:diffgram"].DocumentElement.Table;
   return data2;
-}
+};
 
-
-
-//#endregion 
+//#endregion
 
 module.exports = remoteWS;
