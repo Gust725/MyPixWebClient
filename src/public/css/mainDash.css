@@ -9,6 +9,14 @@ body{
     min-width: 1300px;
 }
 
+/* Title */
+
+.title{
+    margin: 0px 40px;
+    margin-top:50px;
+    margin-bottom: 15px;
+}
+
 /* IMAGE FOLLOW & RANKING CARDS */
 .image__card{
     background: transparent;
@@ -88,6 +96,7 @@ body{
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 /* AUTHOR RECOMMENDED CARDS */

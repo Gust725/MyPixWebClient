@@ -11,7 +11,8 @@
 
 <body>
     <%- include('navbar', LoginData) %>
-        <h1>ULTIMOS ARTWORKS</h1>
+
+        <h1 class="title">ULTIMOS ARTWORKS</h1>
         <div class="container">
             <% for( let index = 0; index < illusts.length; index++ ) { %>
                 <div class="image">
@@ -29,15 +30,15 @@
                                 <a class="author__button" href="/user/<%= illusts[index].author_id %> ">
                                     <img class="author__img" src="/images<%= illusts[index].profile_pic_dir.split(".")[1]+"."+illusts[index].profile_pic_dir.split(".")[2]%>" alt="">
                                     <p class="author__name"><%= illusts[index].nickname %> </p>
-                                </a>
-                                
+                                </a>      
                             </div>
                         </div>
                     </a>  
                 </div>
             <% } %>
         </div>
-        <h1>RANKING GLOBAL</h1>
+
+        <h1 class="title">RANKING GLOBAL</h1>
         <div class="container">
             <% if (globalranking) { %>
                 <% for( let index = 0; index < globalranking.length; index++ ) { %>
@@ -65,7 +66,8 @@
                 <% } %>
             <% } %>
         </div>
-        <h1>ARTISTAS RECOMENDADOS</h1>
+        
+        <h1 class="title">ARTISTAS RECOMENDADOS</h1>
         <div class="container">
             <% for( let index = 0; index < rec_artists.length; index++ ) { %>
                 <div class="author__card">
